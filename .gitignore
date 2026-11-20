@@ -43,3 +43,5 @@ helgrind.log
 
 # Visual Studio per-user settings
 *.user
+.ccls-cache
+.direnv
