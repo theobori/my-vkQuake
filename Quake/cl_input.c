@@ -169,6 +169,7 @@ void IN_RightUp (void)
 }
 void IN_ForwardDown (void)
 {
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.forward += 1;
 	KeyDown (&in_forward);
 }
 void IN_ForwardUp (void)
@@ -178,6 +179,7 @@ void IN_ForwardUp (void)
 void IN_BackDown (void)
 {
 	KeyDown (&in_back);
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.back += 1;
 }
 void IN_BackUp (void)
 {
@@ -202,6 +204,7 @@ void IN_LookdownUp (void)
 void IN_MoveleftDown (void)
 {
 	KeyDown (&in_moveleft);
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.moveleft += 1;
 }
 void IN_MoveleftUp (void)
 {
@@ -210,6 +213,7 @@ void IN_MoveleftUp (void)
 void IN_MoverightDown (void)
 {
 	KeyDown (&in_moveright);
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.moveright += 1;
 }
 void IN_MoverightUp (void)
 {
@@ -236,6 +240,7 @@ void IN_StrafeUp (void)
 void IN_AttackDown (void)
 {
 	KeyDown (&in_attack);
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.attack += 1;
 }
 void IN_AttackUp (void)
 {
@@ -253,6 +258,7 @@ void IN_UseUp (void)
 void IN_JumpDown (void)
 {
 	KeyDown (&in_jump);
+	Statistics_CurrentCtx_GetPtr ()->inputs_counters.jump += 1;
 }
 void IN_JumpUp (void)
 {

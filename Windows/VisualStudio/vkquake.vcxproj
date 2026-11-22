@@ -177,6 +177,8 @@ copy "$(SolutionDir)\..\SDL3\lib64\*.dll" "$(TargetDir)"</Command>
     <ClCompile Include="..\..\Quake\keys.c" />
     <ClCompile Include="..\..\Quake\main_sdl.c" />
     <ClCompile Include="..\..\Quake\mathlib.c" />
+    <ClCompile Include="..\..\Quake\statistics.c" />
+    <ClCompile Include="..\..\Quake\uuid4.c" />
     <ClCompile Include="..\..\Quake\mdfour.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -1134,6 +1136,8 @@ copy "$(SolutionDir)\..\SDL3\lib64\*.dll" "$(TargetDir)"</Command>
     <ClInclude Include="..\..\Quake\world.h" />
     <ClInclude Include="..\..\Quake\wsaerror.h" />
     <ClInclude Include="..\..\Shaders\shaders.h" />
+    <ClInclude Include="..\..\Shaders\statistics.h" />
+    <ClInclude Include="..\..\Shaders\uuid4.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\vkQuake.rc" />

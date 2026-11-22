@@ -41,6 +41,11 @@ read from the demo file.
 ==============================================================================
 */
 
+char *CL_GetDemoFilePath (void)
+{
+	return name;
+}
+
 /*
 ==============
 CL_StopPlayback

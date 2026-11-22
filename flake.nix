@@ -33,6 +33,7 @@
               libx11
               opusfile
               vulkan-loader
+              llvmPackages_18.clang-tools
             ]
             ++ lib.optionals stdenv.hostPlatform.isDarwin [
               moltenvk

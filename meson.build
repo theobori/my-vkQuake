@@ -292,6 +292,7 @@ srcs = [
     'Quake/snd_sdl3.c',
     'Quake/snd_umx.c',
     'Quake/snd_wave.c',
+    'Quake/statistics.c',
     'Quake/steam.c',
     'Quake/strlcat.c',
     'Quake/strlcpy.c',
@@ -301,6 +302,7 @@ srcs = [
     'Quake/sv_user.c',
 	'Quake/sys_sdl.c',
     'Quake/tasks.c',
+    'Quake/uuid4.c',
     'Quake/view.c',
     'Quake/wad.c',
     'Quake/world.c',
@@ -473,6 +475,10 @@ endif
 
 if get_option('do_userdirs').enabled()
     cflags += '-DDO_USERDIRS=1'
+endif
+
+if get_option('statistics_debug').enabled()
+    cflags += '-DSTATISTICS_DEBUG'
 endif
 
 incdirs = [

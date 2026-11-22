@@ -2337,6 +2337,7 @@ typedef struct
 char			 com_gamenames[1024]; // eg: "hipnotic;quoth;warp" ... no id1
 char			 com_gamedir[MAX_OSPATH];
 char			 com_basedir[MAX_OSPATH];
+char			 com_statisticsdir[MAX_OSPATH];
 char			 com_basedirs[MAX_BASEDIRS][MAX_OSPATH]; // all content roots in mount order: extras (e.g. the Nightdive
 														 // add-on dir), the main basedir, the userdir (write target) last
 int				 com_numbasedirs;
@@ -3965,6 +3966,12 @@ void COM_InitFilesystem (void) // johnfitz -- modified based on topaz's tutorial
 		if (p != NULL)
 			COM_AddGameDirectory (p);
 	}
+
+	i = COM_CheckParm ("-statisticsdir");
+	if (i && i < com_argc - 1)
+		q_strlcpy (com_statisticsdir, com_argv[i + 1], sizeof (com_statisticsdir));
+	else
+		q_strlcpy (com_statisticsdir, host_parms->userdir, sizeof (com_statisticsdir));
 
 	COM_CheckRegistered ();
 }

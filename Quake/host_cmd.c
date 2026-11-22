@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "quakedef.h"
 #include "q_ctype.h"
 #include "json.h"
+
 #include <sys/stat.h>
 #ifndef _WIN32
 #include <dirent.h>
@@ -1062,13 +1063,13 @@ static void Host_Mapname_f (void)
 {
 	if (sv.active)
 	{
-		Con_Printf ("\"mapname\" is \"%s\"\n", sv.name);
+		Con_Printf ("\"AA mapname\" is \"%s\"\n", sv.name);
 		return;
 	}
 
 	if (cls.state == ca_connected)
 	{
-		Con_Printf ("\"mapname\" is \"%s\"\n", cl.mapname);
+		Con_Printf ("\"BB mapname\" is \"%s\"\n", cl.mapname);
 		return;
 	}
 

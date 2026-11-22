@@ -426,6 +426,7 @@ struct cache_user_s;
 
 #define MAX_BASEDIRS 4
 extern char				com_basedir[MAX_OSPATH];
+extern char				com_statisticsdir[MAX_OSPATH];
 extern char				com_basedirs[MAX_BASEDIRS][MAX_OSPATH]; // all content roots in mount order, write target (userdir) last
 extern int				com_numbasedirs;
 extern char				com_gamedir[MAX_OSPATH];

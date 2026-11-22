@@ -337,6 +337,12 @@
     <ClCompile Include="..\..\Quake\pr_ext.c">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Quake\statistics.c">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Quake\uuid4.c">
+      <Filter>Main</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Shaders\Compiled\Debug\world.vert.c">
       <Filter>Shaders\Debug\World</Filter>
     </ClCompile>
@@ -1075,6 +1081,12 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Quake\steam.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Quake\statistics.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Quake\uuid4.h">
       <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>

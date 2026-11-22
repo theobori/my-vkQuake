@@ -103,7 +103,8 @@ void main ()
 	MD5_NormalizeJointWeights (joint_weights);
 	vec4 joint_positions[MD5_INFLUENCE_COUNT];
 	MD5_LoadJointPositions (joint_position_x, joint_position_y, joint_position_z, joint_weights, joint_positions);
-	MD5_SkinFrames (joint_offsets, joint_indices, joint_weights, joint_positions, in_normal, (ubo.flags & 0x2) == 0, ubo.joints_bind_offset, skinned_positions,
+	MD5_SkinFrames (
+		joint_offsets, joint_indices, joint_weights, joint_positions, in_normal, (ubo.flags & 0x2) == 0, ubo.joints_bind_offset, skinned_positions,
 		skinned_normals);
 
 	const vec4 lerped_position = vec4 (mix (skinned_positions[0], skinned_positions[1], ubo.blend_factor), 1.0f);

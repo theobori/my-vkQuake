@@ -401,9 +401,10 @@ void CL_ClearTrailStates (void);
 //
 // cl_demo.c
 //
-void CL_StopPlayback (void);
-int	 CL_GetMessage (void);
-void CL_Seek_f (void);
+void  CL_StopPlayback (void);
+int	  CL_GetMessage (void);
+void  CL_Seek_f (void);
+char *CL_GetDemoFilePath (void);
 
 void CL_Stop_f (void);
 void CL_Record_f (void);

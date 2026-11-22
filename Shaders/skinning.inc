@@ -67,8 +67,7 @@ vec3 MD5_TransformNormal (mat4x3 joint_mat, vec3 normal, float weight)
 // space first. Only read when skin_normals is set.
 void MD5_SkinFrames (
 	uint joint_offsets[2], uvec4 joint_indices[MD5_INFLUENCE_GROUP_COUNT], vec4 joint_weights[MD5_INFLUENCE_GROUP_COUNT],
-	vec4 joint_positions[MD5_INFLUENCE_COUNT], vec3 normal, bool skin_normals, uint bind_offset, out vec3 skinned_positions[2],
-	out vec3 skinned_normals[2])
+	vec4 joint_positions[MD5_INFLUENCE_COUNT], vec3 normal, bool skin_normals, uint bind_offset, out vec3 skinned_positions[2], out vec3 skinned_normals[2])
 {
 	vec3 joint_normals[MD5_INFLUENCE_COUNT];
 	for (int k = 0; k < MD5_INFLUENCE_COUNT; ++k)

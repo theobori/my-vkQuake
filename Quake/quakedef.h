@@ -400,6 +400,8 @@ static inline int FindLastBitNonZero64 (const uint64_t mask)
 #include "tasks.h"
 #include "atomics.h"
 #include "hash_map.h"
+#include "statistics.h"
+#include "uuid4.h"
 
 //=============================================================================
 

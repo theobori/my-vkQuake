@@ -26,14 +26,14 @@
 uvec2 tiled_work_group_id ()
 {
 	const uint tile_width = 32;
-	uvec2 grid = gl_NumWorkGroups.xy;
+	uvec2	   grid = gl_NumWorkGroups.xy;
 	if (grid.x <= tile_width || grid.y == 1)
 		return gl_WorkGroupID.xy;
-	uint group_index = gl_WorkGroupID.y * grid.x + gl_WorkGroupID.x;
-	uint tile_size = tile_width * grid.y;
-	uint tile_index = group_index / tile_size;
-	uint tile_offset = group_index - tile_index * tile_size;
-	uint tile_start = tile_index * tile_width;
+	uint  group_index = gl_WorkGroupID.y * grid.x + gl_WorkGroupID.x;
+	uint  tile_size = tile_width * grid.y;
+	uint  tile_index = group_index / tile_size;
+	uint  tile_offset = group_index - tile_index * tile_size;
+	uint  tile_start = tile_index * tile_width;
 	uvec2 group = uvec2 (tile_start + tile_offset % tile_width, tile_offset / tile_width);
 	if (tile_start + tile_width > grid.x)
 	{

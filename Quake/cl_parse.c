@@ -2077,6 +2077,18 @@ void CL_ParseServerMessage (void)
 		case svc_updatestat:
 			i = MSG_ReadByte ();
 			CL_ParseStatInt (i, MSG_ReadLong ());
+			if (cl.stats[STAT_HEALTH] <= 0)
+			{
+				if (!Statistics_CurrentCtx_GetPtr ()->is_dead)
+				{
+					Statistics_CurrentCtx_GetPtr ()->is_dead = true;
+					Statistics_CurrentCtx_GetPtr ()->deaths += 1;
+				}
+			}
+			else
+			{
+				Statistics_CurrentCtx_GetPtr ()->is_dead = false;
+			}
 			break;
 
 		case svc_spawnstaticsound:
@@ -2097,6 +2109,8 @@ void CL_ParseServerMessage (void)
 			cl.completed_time = cl.time;
 			vid.recalc_refdef = true; // go to full screen
 			V_RestoreAngles ();
+			Statistics_CurrentCtx_GetPtr ()->is_completed = true;
+			Statistics_AutoTryStop ();
 			break;
 
 		case svc_finale:
@@ -2109,6 +2123,8 @@ void CL_ParseServerMessage (void)
 			Con_LogCenterPrint (str);
 			// johnfitz
 			V_RestoreAngles ();
+			Statistics_CurrentCtx_GetPtr ()->is_completed = true;
+			Statistics_AutoTryStop ();
 			break;
 
 		case svc_cutscene:
@@ -2121,6 +2137,8 @@ void CL_ParseServerMessage (void)
 			Con_LogCenterPrint (str);
 			// johnfitz
 			V_RestoreAngles ();
+			Statistics_CurrentCtx_GetPtr ()->is_completed = true;
+			Statistics_AutoTryStop ();
 			break;
 
 		case svc_sellscreen:

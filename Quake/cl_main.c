@@ -285,6 +285,7 @@ void CL_SignonReply (void)
 
 	case 4:
 		SCR_EndLoadingPlaque (); // allow normal screen updates
+		Statistics_AutoTryStart ();
 		break;
 	}
 }
@@ -1370,6 +1371,7 @@ void CL_Init (void)
 
 	CL_InitInput ();
 	CL_InitTEnts ();
+	CL_InitStatistics ();
 
 	cmd_function_t *cmd;
 
