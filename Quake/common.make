@@ -300,6 +300,8 @@ OBJS := strlcat.o \
 	tasks.o \
 	hash_map.o \
 	embedded_pak.o \
+	statistics.o \
+	uuid4.o \
 	$(SYSOBJ_SYS) $(SYSOBJ_MAIN)
 
 $(BINTOC_EXE): ../Shaders/bintoc.c
