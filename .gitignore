@@ -45,3 +45,4 @@ helgrind.log
 *.user
 .ccls-cache
 .direnv
+result

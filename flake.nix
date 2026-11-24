@@ -16,6 +16,10 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
+        packages = {
+          default = pkgs.callPackage ./. { };
+        };
+
         devShells = {
           default = pkgs.mkShell {
             packages = with pkgs; [
