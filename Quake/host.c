@@ -1506,6 +1506,13 @@ void Host_Shutdown (void)
 
 	if (cls.state != ca_dedicated)
 	{
+		if (Statistics_IsProducing ())
+		{
+			if (!Statistics_Cancel ())
+				Sys_Printf ("The statistics production could not been cancel properly\n");
+			else
+				Sys_Printf ("The statistics production has been cancel\n");
+		}
 		if (con_initialized)
 			History_Shutdown ();
 		ExtraMaps_ShutDown ();

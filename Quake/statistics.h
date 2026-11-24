@@ -72,5 +72,7 @@ void					  CL_InitStatistics (void);
 statistics_current_ctx_t *Statistics_CurrentCtx_GetPtr (void);
 void					  Statistics_AutoTryStart (void);
 void					  Statistics_AutoTryStop (void);
+qboolean				  Statistics_IsProducing (void);
+qboolean				  Statistics_Cancel (void);
 
 #endif

@@ -102,7 +102,7 @@ static qboolean Statistics_Demo_IsRecording (void)
 	return statistics_current_ctx.is_recording_demo;
 }
 
-static qboolean Statistics_IsProducing (void)
+qboolean Statistics_IsProducing (void)
 {
 	return Statistics_Demo_IsRecording ();
 }
@@ -430,7 +430,7 @@ static qboolean Statistics_Stop (void)
 	return true;
 }
 
-static qboolean Statistics_Cancel (void)
+qboolean Statistics_Cancel (void)
 {
 	if (!Statistics_Demo_StopRecord ())
 	{
