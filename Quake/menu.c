@@ -1053,7 +1053,7 @@ static void M_SinglePlayer_Key (int key)
 
 int load_cursor; // 0 < load_cursor < MAX_SAVEGAMES
 
-#define MAX_SAVEGAMES 20 /* johnfitz -- increased from 12 */
+#define MAX_SAVEGAMES 30
 char			m_filenames[MAX_SAVEGAMES][SAVEGAME_COMMENT_LENGTH + 1];
 int				loadable[MAX_SAVEGAMES];
 static char		quicksave_filename[SAVEGAME_COMMENT_LENGTH + 1];
