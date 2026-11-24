@@ -42,9 +42,9 @@ A list of items like the one above represents the levels played on a single map,
 
 ### Generated Files
 
-Once the statistics have been generated, the JSON data is written to files, with each file representing a single map. The names of these files follow the format `statistics_<mapname>.json`. Additionally, a Quake demo file will be created and moved to the same folder as the JSON file.
+Once the statistics have been generated, the JSON data is written to files, with each file representing a single map. The names of these files follow the format `statistics_<mapname>.json`. Additionally, a Quake demo file will be created and moved to the same folder as the JSON file. All generated files are placed in a folder whose path is specified by the command-line option `-statisticsdir`.
 
-All generated files are placed in a folder whose path is specified by the command-line option `-statisticsdir`.
+Only vkQuake should write and edit this files.
 
 ### Quake console commands
 
