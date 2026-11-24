@@ -49,7 +49,7 @@ typedef struct
 	int							 current_skill;
 	char						 demoname[256];
 	char						 engine_name_and_ver[32];
-	float						 timestamp;
+	long int					 timestamp;
 	char						 statistics_ver[4];
 	qboolean					 is_completed;
 	unsigned int				 deaths;

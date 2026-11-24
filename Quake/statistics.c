@@ -61,7 +61,7 @@ static qboolean Statistics_Init (statistics_t *statistics)
 	statistics->total_monsters = (int)globalvars->total_monsters;
 	statistics->found_secrets = (int)globalvars->found_secrets;
 	statistics->total_secrets = (int)globalvars->total_secrets;
-	statistics->map_time = globalvars->time;
+	statistics->map_time = statistics_current_ctx.is_completed ? cl.completed_time : cl.time;
 	statistics->current_skill = current_skill;
 	statistics->timestamp = time (NULL);
 	statistics->is_completed = statistics_current_ctx.is_completed;
@@ -100,6 +100,11 @@ static qboolean Statistics_IsAutoDisabled (void)
 static qboolean Statistics_Demo_IsRecording (void)
 {
 	return statistics_current_ctx.is_recording_demo;
+}
+
+static qboolean Statistics_IsProducing (void)
+{
+	return Statistics_Demo_IsRecording ();
 }
 
 static char *Statistics_Demo_GetFilePath (void)
@@ -229,7 +234,7 @@ static void Statistics_Json_GetAsString (statistics_t *statistics, char *out, in
 		"\"map_time\":%f,"
 		"\"current_skill\":%d,"
 		"\"demoname\":\"%s\","
-		"\"timestamp\":%f,"
+		"\"timestamp\":%ld,"
 		"\"engine_name_and_ver\":\"%s\","
 		"\"statistics_ver\":\"%s\","
 		"\"is_completed\":%s,"
@@ -286,9 +291,9 @@ static qboolean Statistics_Start (void)
 		return false;
 	}
 
-	if (Statistics_Demo_IsRecording ())
+	if (Statistics_IsProducing ())
 	{
-		Con_DWarning ("(statistics_start): The statistics production is already recording\n");
+		Con_DWarning ("(statistics_start): The statistics production is already running\n");
 		return false;
 	}
 
@@ -461,13 +466,10 @@ static void CL_Statistics_Auto_f (cvar_t *var)
 	}
 	else
 	{
-		if (Statistics_Demo_IsRecording ())
+		if (!Statistics_Cancel ())
 		{
-			if (!Statistics_Cancel ())
-			{
-				// unable to cancel the demo for some reason
-				return;
-			}
+			// unable to cancel the demo for some reason
+			return;
 		}
 
 		Con_Printf ("The statistics production has been disabled\n");
@@ -497,7 +499,7 @@ static void Statistics_Stop_f (void)
 
 void Statistics_AutoTryStop (void)
 {
-	if (Statistics_IsAutoDisabled () || !Statistics_Demo_IsRecording ())
+	if (Statistics_IsAutoDisabled () || !Statistics_IsProducing ())
 		return;
 
 	if (!Statistics_Stop ())
@@ -508,7 +510,7 @@ void Statistics_AutoTryStop (void)
 
 void Statistics_AutoTryStart (void)
 {
-	if (Statistics_IsAutoDisabled () || Statistics_Demo_IsRecording ())
+	if (Statistics_IsAutoDisabled () || Statistics_IsProducing ())
 		return;
 
 	if (!Statistics_Start ())
