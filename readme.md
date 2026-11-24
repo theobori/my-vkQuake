@@ -1,28 +1,68 @@
-# 🌋 vkQuake
-[![Windows CI](https://github.com/Novum/vkQuake/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/build-windows.yml) [![Windows CI](https://github.com/Novum/vkQuake/actions/workflows/build-mingw.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/build-mingw.yml) [![Windows CI](https://github.com/Novum/vkQuake/actions/workflows/build-msys2-clangarm64.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/build-msys2-clangarm64.yml) [![Linux CI](https://github.com/Novum/vkQuake/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/build-linux.yml) [![macOS CI](https://github.com/Novum/vkQuake/actions/workflows/build-mac.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/build-mac.yml) [![Formatting](https://github.com/Novum/vkQuake/actions/workflows/clang-format-check.yml/badge.svg)](https://github.com/Novum/vkQuake/actions/workflows/clang-format-check.yml)
+# My vkQuake fork
 
-vkQuake is a port of id Software's [Quake](https://en.wikipedia.org/wiki/Quake_(video_game)) using Vulkan instead of OpenGL for rendering. It is based on the popular [QuakeSpasm](http://quakespasm.sourceforge.net/) and [QuakeSpasm-Spiked](https://triptohell.info/moodles/qss/) ports and runs all mods compatible with QuakeSpasm like [Arcane Dimensions](http://www.moddb.com/mods/arcane-dimensions). 
+This GitHub repository is my vkQuake fork. The main purpose of my code changes is to add features that allow statistics for each match played to be exported to JSON files and to associate a Quake demo file with each one.
 
-Improvements over QuakeSpasm include:
-* Much better performance with multithreaded rendering and loading
-* The game can run at higher frame rates than 72Hz without breaking physics
-* A software Quake like underwater effect
-* Support for Classic (original Quake) and Enhanced models (either MD5 format like the 2021 re-Release, or MD3 like Quake3)
-* When both Classic and Enhanced versions of models exist, display one or other kind using the Models menu option.
-* True color skins support (`.png`, `.tga`, `.jpg`) for MD3/MD5 models, including fullbrights (from QSS)
-* Dynamic shadows (requires a GPU with ray tracing support)
-* Dynamic lights, using 2021 rerelease `dynamiclight` entities (requires a GPU with ray tracing support and "Dynamic Shadows" set to medium or higher)
-* Better color precision reducing banding in dark areas
-* Native support for anti aliasing and anisotropic filtering
-* 8-bit color emulation
-* Scaling for pixelated look
-* Mods menu for easy mod loading
-* More modern protocol to avoid certain movement issues (from QSS)
-* Support for custom mod HUDs (from QSS)
-* Support for scriptable particles (from QSS)
-* True color support for level textures and static models (`.png`, `.tga`, `.jpg`)
-* External WAD support ([more info](https://github.com/Novum/vkQuake/pull/753))
-* WAD3 format support, allowing per-texture palettes for more colorful levels ([more info](https://github.com/Novum/vkQuake/pull/753))
+## Statistics
+
+This section describes my specifications regarding the statistics features.
+
+### Generated JSON Structures
+
+I won't explain each JSON field, I consider their names to be self-explanatory. The example JSON object below represents a level that has been played.
+
+```json
+{
+  "killed_monsters": 6,
+  "total_monsters": 10,
+  "found_secrets": 0,
+  "total_secrets": 6,
+  "mapname": "e1m1",
+  "levelname": "the Slipgate Complex",
+  "gamename": "id1",
+  "map_time": 69.700951,
+  "current_skill": 0,
+  "demoname": "fdf8b8ff-4532-4352-81b2-594afb3d8395.dem",
+  "timestamp": 1795465472.000000,
+  "engine_name_and_ver": "vkQuake 1.37.1",
+  "statistics_ver": "1.0",
+  "is_completed": true,
+  "deaths": 2,
+  "inputs_counters": {
+    "jump": 74,
+    "forward": 60,
+    "moveleft": 69,
+    "moveright": 72,
+    "back": 10,
+    "attack": 32
+  }
+}
+```
+
+A list of items like the one above represents the levels played on a single map, such as "e1m1".
+
+### Generated Files
+
+Once the statistics have been generated, the JSON data is written to files, with each file representing a single map. The names of these files follow the format `statistics_<mapname>.json`. Additionally, a Quake demo file will be created and moved to the same folder as the JSON file.
+
+All generated files are placed in a folder whose path is specified by the command-line option `-statisticsdir`.
+
+### Quake console commands
+
+The table below summarizes the Quake console commands specifications.
+
+| Name | Description |
+| - | - |
+| `statistics_start` | Starts recording statistics and the demo. |
+| `statistics_stop` | Stops recording statistics and the demo. Writes the JSON file to the destination folder and then moves the Quake demo file to the destination folder. |
+| `statistics_cancel` | Cancels the recording of statistics and the demo. Deletes the Quake demo file. |
+
+### Quake console variable
+
+The table below summarizes the Quake console variables specifications.
+
+| Name | Description | Type |
+| - | - | - |
+| `cl_statistics_auto` | If enabled, recording of statistics and the demo will start automatically at the beginning of each level. They will stop automatically once the level is completed. | Boolean |
 
 ## Installation
 
