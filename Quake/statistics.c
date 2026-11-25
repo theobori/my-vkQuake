@@ -21,7 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "quakedef.h"
 #include "json.h"
 
-static cvar_t					cl_statistics_auto = {"cl_statistics_auto", "0", CVAR_ARCHIVE_GAME}; // enable or disable the statistics production
+static cvar_t cl_statistics_auto = {"cl_statistics_auto", "0", CVAR_ARCHIVE_GAME}; // enable or disable the statistics production
+static cvar_t cl_statistics_cancel_on_suicide = {
+	"cl_statistics_cancel_on_suicide", "0", CVAR_ARCHIVE_GAME}; // enable or disable the statistics production canceling when the player suicide
 static statistics_current_ctx_t statistics_current_ctx;
 static UUID4_STATE_T			state;
 static UUID4_T					uuid;
@@ -96,6 +98,11 @@ static qboolean Statistics_Init (statistics_t *statistics)
 static qboolean Statistics_IsAutoEnabled (void)
 {
 	return cl_statistics_auto.value != 0;
+}
+
+qboolean Statistics_IsCancelOnSuicideEnabled (void)
+{
+	return cl_statistics_cancel_on_suicide.value != 0;
 }
 
 static qboolean Statistics_IsAutoDisabled (void)
@@ -474,10 +481,7 @@ static void CL_Statistics_Auto_f (cvar_t *var)
 	else
 	{
 		if (!Statistics_Cancel ())
-		{
-			// unable to cancel the demo for some reason
 			return;
-		}
 
 		Con_Printf ("The statistics automatic production has been canceled and disabled\n");
 	}
@@ -586,6 +590,8 @@ void CL_InitStatistics (void)
 	uuid4_seed (&state);
 
 	Cvar_RegisterVariable (&cl_statistics_auto);
+	Cvar_RegisterVariable (&cl_statistics_cancel_on_suicide);
+
 	Cvar_SetCallback (&cl_statistics_auto, CL_Statistics_Auto_f);
 	Cmd_AddCommand ("statistics_cancel", Statistics_Cancel_f);
 	Cmd_AddCommand ("statistics_start", Statistics_Start_f);

@@ -75,5 +75,6 @@ void					  Statistics_AutoTryStart (void);
 void					  Statistics_AutoTryStop (void);
 qboolean				  Statistics_IsProducing (void);
 qboolean				  Statistics_Cancel (void);
+qboolean				  Statistics_IsCancelOnSuicideEnabled (void);
 
 #endif

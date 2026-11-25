@@ -72,6 +72,7 @@ The table below summarizes the Quake console variables specifications.
 | Name | Description | Type |
 | - | - | - |
 | `cl_statistics_auto` | If enabled, recording of statistics and the demo will start automatically at the beginning of each level. They will stop automatically once the level is completed. | Boolean |
+| `cl_statistics_cancel_on_suicide` | If enabled, automatically cancel the statistics recording when the player suicide. | Boolean |
 
 ### Meson options
 

@@ -2995,6 +2995,14 @@ static void Host_Kill_f (void)
 	pr_global_struct->time = qcvm->time;
 	pr_global_struct->self = EDICT_TO_PROG (sv_player);
 	PR_ExecuteProgram (pr_global_struct->ClientKill);
+
+	if (Statistics_IsCancelOnSuicideEnabled () && Statistics_IsProducing ())
+	{
+		if (!Statistics_Cancel ())
+			Con_DPrintf ("The statistics production could not been cancel properly\n");
+		else
+			Con_DPrintf ("The statistics production has been cancel\n");
+	}
 }
 
 /*
