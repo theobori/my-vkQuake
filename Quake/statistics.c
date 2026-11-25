@@ -469,7 +469,7 @@ static void CL_Statistics_Auto_f (cvar_t *var)
 {
 	if (Statistics_IsAutoEnabled ())
 	{
-		Con_Printf ("The statistics production has been enabled, it will take effect on the next map\n");
+		Con_Printf ("The statistics automatic production has been enabled, it will take effect on the next map\n");
 	}
 	else
 	{
@@ -479,7 +479,7 @@ static void CL_Statistics_Auto_f (cvar_t *var)
 			return;
 		}
 
-		Con_Printf ("The statistics production has been disabled\n");
+		Con_Printf ("The statistics automatic production has been canceled and disabled\n");
 	}
 }
 
@@ -498,6 +498,7 @@ static void Statistics_Start_f (void)
 		Con_Printf ("The statistics production has been started\n");
 	}
 }
+
 static void Statistics_Stop_f (void)
 {
 	if (cmd_source != src_command)

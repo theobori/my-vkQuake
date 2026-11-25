@@ -81,6 +81,13 @@ The table below summarizes the Meson options.
 | - | - | - |
 | `statistics_debug` | Enable statistics debug features, including Quake console commands. | Boolean |
 
+### Recommended usage
+
+Personally, I find that the most convenient and simple approach is to use a bind like the one below.
+
+```text
+bind c toggle cl_statistics_auto 
+```
 
 ## Installation
 
