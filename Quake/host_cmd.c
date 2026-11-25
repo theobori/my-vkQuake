@@ -1063,13 +1063,13 @@ static void Host_Mapname_f (void)
 {
 	if (sv.active)
 	{
-		Con_Printf ("\"AA mapname\" is \"%s\"\n", sv.name);
+		Con_Printf ("\"mapname\" is \"%s\"\n", sv.name);
 		return;
 	}
 
 	if (cls.state == ca_connected)
 	{
-		Con_Printf ("\"BB mapname\" is \"%s\"\n", cl.mapname);
+		Con_Printf ("\"mapname\" is \"%s\"\n", cl.mapname);
 		return;
 	}
 
