@@ -52,6 +52,7 @@ typedef struct
 	long int					 timestamp;
 	char						 statistics_ver[4];
 	qboolean					 is_completed;
+	qboolean					 is_automatically_produced;
 	unsigned int				 deaths;
 	statistics_inputs_counters_t inputs_counters;
 } statistics_t;
@@ -62,10 +63,10 @@ typedef struct
 	statistics_inputs_counters_t inputs_counters;
 	qboolean					 is_completed;
 	qboolean					 is_recording_demo;
-	// used to avoid duplicates when incrementing the deaths counter
-	qboolean					 is_dead;
+	qboolean					 is_dead; // used to avoid duplicates when incrementing the deaths counter
 	unsigned int				 deaths;
-
+	qboolean					 is_automatically_started;
+	qboolean					 is_automatically_stopped;
 } statistics_current_ctx_t;
 
 void					  CL_InitStatistics (void);

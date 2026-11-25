@@ -48,6 +48,11 @@ static qboolean Statistics_Com_Writefile (const char *filename, const void *data
 	return true;
 }
 
+static qboolean Statistics_IsAutomatic (void)
+{
+	return statistics_current_ctx.is_automatically_started && statistics_current_ctx.is_automatically_stopped;
+}
+
 static qboolean Statistics_Init (statistics_t *statistics)
 {
 	globalvars_t *globalvars = (globalvars_t *)sv.qcvm.globals;
@@ -67,6 +72,7 @@ static qboolean Statistics_Init (statistics_t *statistics)
 	statistics->is_completed = statistics_current_ctx.is_completed;
 	statistics->deaths = statistics_current_ctx.deaths;
 	statistics->inputs_counters = statistics_current_ctx.inputs_counters;
+	statistics->is_automatically_produced = Statistics_IsAutomatic ();
 
 	const char *gamename = COM_GetGameNames (false);
 	if (gamename[0] == 0)
@@ -238,6 +244,7 @@ static void Statistics_Json_GetAsString (statistics_t *statistics, char *out, in
 		"\"engine_name_and_ver\":\"%s\","
 		"\"statistics_ver\":\"%s\","
 		"\"is_completed\":%s,"
+		"\"is_automatically_produced\":%s,"
 		"\"deaths\":%u,"
 		"\"inputs_counters\":{"
 		"\"jump\":%u,"
@@ -249,9 +256,9 @@ static void Statistics_Json_GetAsString (statistics_t *statistics, char *out, in
 		"}}",
 		statistics->killed_monsters, statistics->total_monsters, statistics->found_secrets, statistics->total_secrets, statistics->mapname,
 		statistics->levelname, statistics->gamename, statistics->map_time, statistics->current_skill, statistics->demoname, statistics->timestamp,
-		statistics->engine_name_and_ver, statistics->statistics_ver, statistics->is_completed ? "true" : "false", statistics->deaths,
-		statistics->inputs_counters.jump, statistics->inputs_counters.forward, statistics->inputs_counters.moveleft, statistics->inputs_counters.moveright,
-		statistics->inputs_counters.back, statistics->inputs_counters.attack);
+		statistics->engine_name_and_ver, statistics->statistics_ver, statistics->is_completed ? "true" : "false",
+		statistics->is_automatically_produced ? "true" : "false", statistics->deaths, statistics->inputs_counters.jump, statistics->inputs_counters.forward,
+		statistics->inputs_counters.moveleft, statistics->inputs_counters.moveright, statistics->inputs_counters.back, statistics->inputs_counters.attack);
 
 	q_strlcpy (out, mem_string, capacity);
 	Mem_Free (mem_string);
@@ -482,30 +489,30 @@ static void Statistics_Start_f (void)
 		return;
 
 	if (!Statistics_Start ())
+	{
 		Con_Printf ("The statistics production could not been started properly\n");
+	}
 	else
+	{
+		statistics_current_ctx.is_automatically_started = false;
 		Con_Printf ("The statistics production has been started\n");
+	}
 }
 static void Statistics_Stop_f (void)
 {
 	if (cmd_source != src_command)
 		return;
 
+	statistics_current_ctx.is_automatically_stopped = false;
+
 	if (!Statistics_Stop ())
+	{
 		Con_Printf ("The statistics production could not been stopped properly\n");
+	}
 	else
+	{
 		Con_Printf ("The statistics production has been stopped\n");
-}
-
-void Statistics_AutoTryStop (void)
-{
-	if (Statistics_IsAutoDisabled () || !Statistics_IsProducing ())
-		return;
-
-	if (!Statistics_Stop ())
-		Sys_Printf ("The statistics production could not been automatically stopped properly\n");
-	else
-		Sys_Printf ("The statistics production has automatically been stopped\n");
+	}
 }
 
 void Statistics_AutoTryStart (void)
@@ -514,9 +521,33 @@ void Statistics_AutoTryStart (void)
 		return;
 
 	if (!Statistics_Start ())
+	{
+		statistics_current_ctx.is_automatically_started = false;
 		Sys_Printf ("The statistics production could not been automatically started properly\n");
+	}
 	else
+	{
+		statistics_current_ctx.is_automatically_started = true;
 		Sys_Printf ("The statistics production has automatically been started\n");
+	}
+}
+
+void Statistics_AutoTryStop (void)
+{
+	if (Statistics_IsAutoDisabled () || !Statistics_IsProducing ())
+		return;
+
+	statistics_current_ctx.is_automatically_stopped = true;
+
+	if (!Statistics_Stop ())
+	{
+		statistics_current_ctx.is_automatically_stopped = false;
+		Sys_Printf ("The statistics production could not been automatically stopped properly\n");
+	}
+	else
+	{
+		Sys_Printf ("The statistics production has automatically been stopped\n");
+	}
 }
 
 #if defined(STATISTICS_DEBUG)
@@ -542,6 +573,10 @@ static void Statistics_Debug_f (void)
 	Con_Printf ("mapname '%s', strlen: %ld\n", cl.mapname, strlen (cl.mapname));
 	Con_Printf ("levelname '%s', strlen: %ld\n", cl.levelname, strlen (cl.levelname));
 	Con_Printf ("gametype '%d'\n", cl.gametype);
+	Con_Printf ("gametype '%d'\n", cl.gametype);
+	Con_Printf ("gametype '%d'\n", cl.gametype);
+	Con_Printf ("statistics_current_ctx.is_automatically_started  %d\n", statistics_current_ctx.is_automatically_started);
+	Con_Printf ("statistics_current_ctx.is_automatically_stopped  %d\n", statistics_current_ctx.is_automatically_stopped);
 }
 #endif
 

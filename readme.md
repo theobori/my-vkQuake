@@ -12,8 +12,12 @@ I won't explain each JSON field, I consider their names to be self-explanatory. 
 
 ```json
 {
+  // These numeric value is manage by quake
+  // it starts incrementing when the you spawn and stop when the statistics
+  // recording stop.
   "killed_monsters": 6,
   "total_monsters": 10,
+  // Same for this.
   "found_secrets": 0,
   "total_secrets": 6,
   "mapname": "e1m1",
@@ -22,11 +26,16 @@ I won't explain each JSON field, I consider their names to be self-explanatory. 
   "map_time": 47.000000,
   "current_skill": 0,
   "demoname": "fdf8b8ff-4532-4352-81b2-594afb3d8395.dem",
+  // Unix timestamp
   "timestamp": 1795465472,
   "engine_name_and_ver": "vkQuake 1.37.1",
   "statistics_ver": "1.0",
   "is_completed": true,
+  // True if the statistics recording start and stop is automatic, it
+  // will only happens it cl_statistics_auto is set to 1.
+  "is_automatically_produced": true,
   "deaths": 2,
+  // These counters are set to 0 when the statistics start recording.
   "inputs_counters": {
     "jump": 74,
     "forward": 60,
@@ -63,6 +72,15 @@ The table below summarizes the Quake console variables specifications.
 | Name | Description | Type |
 | - | - | - |
 | `cl_statistics_auto` | If enabled, recording of statistics and the demo will start automatically at the beginning of each level. They will stop automatically once the level is completed. | Boolean |
+
+### Meson options
+
+The table below summarizes the Meson options.
+
+| Name | Description | Type |
+| - | - | - |
+| `statistics_debug` | Enable statistics debug features, including Quake console commands. | Boolean |
+
 
 ## Installation
 
